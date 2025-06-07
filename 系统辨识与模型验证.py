@@ -13,11 +13,12 @@ time = data['time'].values
 temperature = data['temperature'].values
 voltage = data['volte'].values
 
-# 1. 手动确定阶跃时刻（需根据实际数据调整）
-step_time = 190  # 手动调整，需通过数据图像确认
+# 1. 手动估计阶跃时刻（需根据实际数据调整）
+step_time = 190  # 手动调整，需通过数据图像估计
 mask_initial = time < step_time
 mask_steady = time > step_time + 9000  # 确保终值稳态（如阶跃后9000s）
 
+# 最小二乘法估计参数
 # 2. 计算稳态值（延长区间，抗噪声）
 u0 = np.mean(voltage[mask_initial])
 u1 = np.mean(voltage[mask_steady])
